@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: wordcount
+  labels:
+    app.kubernetes.io/name: wordcount
+    app.kubernetes.io/component: worker
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: wordcount
+        app.kubernetes.io/component: worker
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: wordcount
+          image: pcjun97/wordcount
+          command:
+            - "/app/wordcount"
+            - "/data/input.txt"
+          volumeMounts:
+            - name: input
+              mountPath: "/data"
+              readOnly: true
+      volumes:
+        - name: input
+          configMap:
+            name: wordcount-input
+            items:
+              - key: "input.txt"
+                path: "input.txt"
