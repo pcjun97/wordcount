@@ -12,7 +12,7 @@ import (
 var (
 	input1 = "foo bar bar"
 	input2 = strings.ReplaceAll(input1, " ", "\t")
-	input3 = "foo. _bar!! foo bar bar"
+	input3 = "foo. _bar!! foo, _ bar bar"
 	input4 = `foo bar
 foo. _bar!! @foo foo,
 foo bar bar`
@@ -26,7 +26,7 @@ func TestCount(t *testing.T) {
 	}{
 		{"input1", input1, []wordcount.Record{{"bar", 2}, {"foo", 1}}},
 		{"input2", input2, []wordcount.Record{{"bar", 2}, {"foo", 1}}},
-		{"input3", input3, []wordcount.Record{{"bar", 2}, {"_bar!!", 1}, {"foo", 1}, {"foo.", 1}}},
+		{"input3", input3, []wordcount.Record{{"bar", 2}, {"_", 1}, {"_bar!!", 1}, {"foo,", 1}, {"foo.", 1}}},
 		{"input4", input4, []wordcount.Record{{"bar", 3}, {"foo", 2}, {"@foo", 1}, {"_bar!!", 1}, {"foo,", 1}, {"foo.", 1}}},
 	}
 
